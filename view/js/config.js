@@ -11,6 +11,8 @@ const SERVER_MESSAGE_LIMIT_BYTES = 16 * 1024 * 1024;
 const HEADROOM_BYTES = 16 * 1024;
 // 导出最大消息字节数，初始值等于服务器限制，可通过服务器配置修改
 export let MAX_MESSAGE_BYTES = SERVER_MESSAGE_LIMIT_BYTES;
+// 导出最大消息数量，可通过服务器配置修改（默认100条，适用于小团队）
+export let MAX_MESSAGES = 100;
 // 大厅房间的固定名称
 export const LOBBY_ROOM = "lobby";
 // 用户名在本地存储中的键名
@@ -108,6 +110,10 @@ export function applyServerConfig(cfg) {
     // 更新最大消息字节数，如果配置有效
     if (cfg && Number.isFinite(cfg.maxMessageBytes)) {
       MAX_MESSAGE_BYTES = cfg.maxMessageBytes;
+    }
+    // 更新最大消息数量，如果配置有效
+    if (cfg && Number.isFinite(cfg.maxMessages) && cfg.maxMessages > 0) {
+      MAX_MESSAGES = Math.max(10, Math.min(1000, cfg.maxMessages)); // 限制在10-1000之间
     }
     // 更新用户名正则表达式，如果配置有效
     if (

@@ -4,6 +4,7 @@
  * 处理文本消息、文件消息、状态消息的渲染，以及新消息提示功能。
  */
 import { $, fmtBytes, timeString, dataUrlBytes, isoNow } from "./utils.js";
+import { MAX_MESSAGES } from "./config.js";
 // 进度条隐藏定时器
 let progressHideTimer = null;
 // 新消息计数
@@ -174,6 +175,16 @@ export function addMessage(m, currentUsername) {
   // 检查用户是否滚动到底部
   const wasAtBottom =
     el && el.scrollTop + el.clientHeight >= el.scrollHeight - threshold;
+  // 检查消息数量限制，删除最旧的消息
+  const messageElements = el ? el.querySelectorAll(".message") : [];
+  if (messageElements.length >= MAX_MESSAGES) {
+    const toRemove = messageElements.length - MAX_MESSAGES + 1;
+    for (let i = 0; i < toRemove; i++) {
+      if (messageElements[i]) {
+        messageElements[i].remove();
+      }
+    }
+  }
   const node =
     m.type === "status"
       ? buildStatusMessageNode(m)

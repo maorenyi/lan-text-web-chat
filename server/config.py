@@ -21,6 +21,7 @@ jd = json.dumps
 class Settings:
     allow_origins: list[str]
     max_message_bytes: int
+    max_messages: int
     static_cache_seconds: int
 
 
@@ -52,12 +53,14 @@ def _get_env_int(key: str, default: int, min_value: int = 0) -> int:
 def _load_settings() -> Settings:
     # 处理 CORS_ORIGINS
     allow = _get_cors_origins()
-    # 处理 MAX_MESSAGE_BYTES 和 STATIC_CACHE_SECONDS
+    # 处理 MAX_MESSAGE_BYTES、MAX_MESSAGES 和 STATIC_CACHE_SECONDS
     max_bytes = _get_env_int("MAX_MESSAGE_BYTES", 16 * 1024 * 1024, 1)
+    max_msgs = _get_env_int("MAX_MESSAGES", 100, 10)  # 默认100，最小10
     cache_seconds = _get_env_int("STATIC_CACHE_SECONDS", 86400, 0)
     return Settings(
         allow_origins=allow,
         max_message_bytes=max_bytes,
+        max_messages=max_msgs,
         static_cache_seconds=cache_seconds,
     )
 
@@ -68,6 +71,8 @@ _settings = _load_settings()
 ALLOW_ORIGINS = _settings.allow_origins
 # 单条消息最大字节数
 MAX_MESSAGE_BYTES = _settings.max_message_bytes
+# 消息窗口最大数量
+MAX_MESSAGES = _settings.max_messages
 # 静态资源缓存时长（秒）
 STATIC_CACHE_SECONDS = _settings.static_cache_seconds
 
@@ -101,6 +106,7 @@ __all__ = [
     "VIEW_DIR",
     "LOBBY_ID",
     "MAX_MESSAGE_BYTES",
+    "MAX_MESSAGES",
     "NAME_PATTERN",
     "STATIC_CACHE_SECONDS",
     "err",

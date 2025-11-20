@@ -43,6 +43,9 @@ CORS_ORIGINS=*
 # 单条消息最大字节数，默认为 16777216 (16MB)
 MAX_MESSAGE_BYTES=16777216
 
+# 消息窗口最大数量，默认为 100
+MAX_MESSAGES=100
+
 # 静态资源缓存时间（秒），默认为 86400 (24小时)
 STATIC_CACHE_SECONDS=86400
 ```

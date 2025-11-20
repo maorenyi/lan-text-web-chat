@@ -8,6 +8,7 @@ import os
 from server.config import (
     VIEW_DIR,
     MAX_MESSAGE_BYTES,
+    MAX_MESSAGES,
     jd,
     err,
     ok,
@@ -54,6 +55,7 @@ def make_router(room_manager: RoomManager) -> APIRouter:
     async def get_config():
         return {
             "maxMessageBytes": MAX_MESSAGE_BYTES,
+            "maxMessages": MAX_MESSAGES,
             "namePattern": NAME_PATTERN,
             "errorCodes": sorted(ERROR_CODES),
         }
