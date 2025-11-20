@@ -89,14 +89,14 @@ export function errorText(code, fallback = "发生错误") {
 }
 /**
  * 计算允许的文件原始字节数
- * 基于最大消息字节数减去头部空间，然后取3/4作为文件大小限制
+ * 基于最大消息字节数减去头部空间，然后除以base64编码开销(4/3)
  * @returns {number} 允许的文件字节数
  */
 export function allowedFileOriginalBytes() {
   // 计算可用字节数，确保不小于0
   const avail = Math.max(0, MAX_MESSAGE_BYTES - HEADROOM_BYTES);
-  // 返回可用字节数的3/4，作为文件大小上限
-  return Math.floor((avail * 3) / 4);
+  // 返回可用字节数除以base64编码开销(4/3)，得到原始文件大小限制
+  return Math.floor(avail / (4 / 3));
 }
 /**
  * 应用服务器发送的配置信息

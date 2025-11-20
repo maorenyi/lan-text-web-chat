@@ -119,7 +119,42 @@ export function trimUtf8ToBytes(s, limit) {
     if (utf8ByteLength(chunk) <= limit) lo = mid;
     else hi = mid - 1;
   }
-  return safeSliceByCodeUnit(s, lo);
+  // 确保UTF-8字符边界安全
+  return safeSliceByCodeUnit(s, safeUtf8Truncate(s, lo, limit));
+}
+/**
+ * 安全地截断字符串到UTF-8字节限制，确保不截断多字节字符
+ * @param {string} s - 输入字符串
+ * @param {number} charPos - 字符位置
+ * @param {number} byteLimit - 字节限制
+ * @returns {number} 安全的字符位置
+ */
+function safeUtf8Truncate(s, charPos, byteLimit) {
+  const bytes = utf8Encoder.encode(s.slice(0, charPos));
+  if (bytes.length <= byteLimit) return charPos;
+  // 从byteLimit位置向前查找UTF-8字符开始
+  let pos = byteLimit;
+  while (pos > 0) {
+    const byte = bytes[pos - 1];
+    // 如果是UTF-8序列的开始字节（最高位不是10xxxxxx）
+    if ((byte & 0xc0) !== 0x80) {
+      break;
+    }
+    pos--;
+  }
+  // 直接计算字符位置：从头开始计数，直到字节位置
+  let charCount = 0;
+  let byteCount = 0;
+  while (charCount < charPos && byteCount < pos) {
+    const charBytes = utf8Encoder.encode(s[charCount]).length;
+    if (byteCount + charBytes <= pos) {
+      byteCount += charBytes;
+      charCount++;
+    } else {
+      break;
+    }
+  }
+  return charCount;
 }
 /**
  * 为元素添加事件监听器

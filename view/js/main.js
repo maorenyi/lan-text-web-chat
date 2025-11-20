@@ -388,14 +388,10 @@ function init() {
   // 刷新消息输入框元素缓存
   const msgInputEl = refreshEl("messageInput");
   /**
-   * 应用约束条件，包括最大长度和文件大小限制
-   * 设置输入框的maxlength属性和验证逻辑
+   * 应用约束条件，包括文件大小限制
+   * 设置验证逻辑
    */
   function applyConstraints() {
-    // 设置消息输入框的最大长度
-    const msgInputEl2 = getEl("messageInput");
-    if (msgInputEl2)
-      msgInputEl2.setAttribute("maxlength", String(MAX_MESSAGE_BYTES));
     // 更新文件大小限制显示
     updateSendFileLabel();
     // 设置房间代码验证
