@@ -224,6 +224,10 @@ function confirmUsername() {
     try {
       localStorage.setItem(STORAGE_KEY, username);
     } catch (_) {}
+    // 成功修改用户名后，让输入框失焦避免多次触发
+    try {
+      input.blur();
+    } catch (_) {}
     // 如果房间连接已打开，发送重命名消息
     if (
       transport &&
@@ -526,6 +530,11 @@ function init() {
     // 连接大厅并请求创建房间
     transport.connectLobby();
     transport.requestCreate(roomName);
+    // 创建请求发送后，让输入框失焦避免多次触发
+    setTimeout(() => {
+      const input = getEl("roomCode");
+      if (input) input.blur();
+    }, 0);
   });
   // 离开房间按钮设置
   const leaveBtn = refreshEl("leaveRoomBtn");
@@ -572,6 +581,13 @@ function setupRoomCodeValidation() {
   };
   // 绑定输入事件进行实时验证
   input.addEventListener("input", apply);
+  // 绑定回车键事件，触发创建房间
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      btn.click();
+    }
+  });
   // 初始应用验证
   apply();
 }
