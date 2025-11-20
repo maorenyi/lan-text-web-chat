@@ -1,4 +1,7 @@
-# 💬 局域网文字聊天web应用
+# 💬 局域网文字聊天 web 应用
+
+![light](screenshots/light.png)
+![dark](screenshots/dark.png)
 
 ## 环境配置
 
