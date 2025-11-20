@@ -1,0 +1,191 @@
+/* CSS变量定义文件 */
+/* 定义应用程序的颜色、尺寸、间距等设计系统变量 */
+/* 支持浅色和深色主题切换 */
+:root {
+  /* ===== 基础颜色 ===== */
+  /* 页面背景色 */
+  --bg-page: #eef3f8;
+  /* 卡片背景色 */
+  --bg-card: #ffffff;
+  /* 主要文字颜色 */
+  --text: #222222;
+  /* 次要文字颜色（muted） */
+  --muted: #666666;
+  /* 边框颜色 */
+  --border: #eeeeee;
+  /* 面板背景色 */
+  --panel-bg: #fbfdff;
+  /* 列表项悬停背景色 */
+  --list-hover: #f5faff;
+  /* 激活状态背景色 */
+  --active-bg: #e6f7ff;
+  /* 激活状态文字颜色 */
+  --active-text: #096dd9;
+  /* 输入框背景色 */
+  --input-bg: #ffffff;
+  /* 输入框边框颜色 */
+  --input-border: #d0d7de;
+  /* 输入框文字颜色 */
+  --input-text: #222222;
+  /* 输入框占位符颜色 */
+  --input-placeholder: #9aa4b2;
+  /* 默认气泡背景色 */
+  --bubble-bg: #ffffff;
+  /* 自己发送的气泡背景色 */
+  --bubble-me-bg: #e7f7d8;
+  /* 自己发送的气泡文字颜色 */
+  --bubble-me-text: #1f3d1f;
+  /* 他人发送的气泡背景色 */
+  --bubble-other-bg: #e6f4ff;
+  /* 他人发送的气泡文字颜色 */
+  --bubble-other-text: #0f2940;
+  /* 状态文字颜色 */
+  --status-text: #8a8f98;
+  /* 时间戳颜色 */
+  --timestamp: #6e7781;
+  /* 当前用户背景色 */
+  --user-me-bg: #eff7e6;
+  /* 当前用户文字颜色 */
+  --user-me-text: #2d6a1f;
+  /* 圆角半径 */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  /* 图标尺寸 */
+  --icon-size: 16px;
+  --icon-sm: 14px;
+  /* 输入框宽度 */
+  --input-width: 200px;
+  /* 阴影效果 */
+  --shadow-hairline: 0 1px 0 rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.06);
+  --card-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+  --bubble-shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.12);
+  /* 特殊按钮颜色 */
+  --ghost-bg: #e6f7ff;
+  --ghost-bg-hover: #d3eefc;
+  --ghost-color: #096dd9;
+  --download-bg: #f0f7ff;
+  --download-bg-hover: #e6f1ff;
+  --download-color: #096dd9;
+  --download-border: #cfe4ff;
+  /* 按钮相关颜色 */
+  --btn-bg: #f3f6fa;
+  --btn-color: var(--text);
+  --btn-border: transparent;
+  --btn-shadow-rest: none;
+  --btn-shadow-hover: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --btn-bg-hover: var(--btn-bg);
+  /* 间距系统 */
+  --space-3: 3px;
+  --space-4: 4px;
+  --space-5: 5px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-18: 18px;
+  /* 列表相关 */
+  --list-gap: 6px;
+  --list-padding: 8px;
+  --li-pad-y: 8px;
+  --li-pad-x: 10px;
+  --li-radius: 6px;
+  /* 边框和焦点 */
+  --border-width: 1px;
+  --focus-outline-md: 3px;
+  --focus-outline-sm: 2px;
+  --focus-offset-sm: 1px;
+  --focus-offset-md: 2px;
+  /* 主题切换开关 */
+  --switch-w: 46px;
+  --switch-h: 24px;
+  --switch-thumb: 18px;
+  --switch-track-bg: #e6f0fa;
+  --switch-thumb-bg: #fff;
+  --switch-translate: calc(
+    var(--switch-w) - var(--switch-thumb) - 2 * var(--space-3)
+  );
+  /* 滚动条 */
+  --scrollbar-size: 10px;
+  --scrollbar-border-w: 2px;
+  --scroll-track: var(--panel-bg);
+  --scroll-thumb: #c5ccd7;
+  --scroll-thumb-hover: #b8c2cf;
+  /* 布局尺寸 */
+  --chat-max-w: 1280px;
+  --chat-max-h: 960px;
+  --messages-min-w: 600px;
+  --side-panel-w: 300px;
+  --image-max-w: 320px;
+  --progress-track-w: 180px;
+  --preview-max-h: 240px;
+  --input-min-h: 48px;
+  --message-max-pct: 70%;
+  /* 字体和行高 */
+  --font-xs: 0.75rem;
+  --font-sm: 12px;
+  --font-compact: 0.85rem;
+  --font-base: 14px;
+  --line-h-base: 1.45;
+  /* 过渡动画 */
+  --transition-fast: 0.12s;
+  --transition-ui: 0.15s;
+  --transition-micro: 0.06s;
+  --transition-progress: 0.2s;
+  /* 交互效果 */
+  --press-translate-y: 1px;
+  --hover-raise-y: 2px;
+  --hover-bubble-raise-y: 1px;
+  /* 警告颜色 */
+  --warn-bg: #fff1d6;
+  --warn-text: #b34700;
+}
+/* ===== 深色主题变量 ===== */
+/* 当body具有theme-dark类时应用的深色主题变量 */
+body.theme-dark {
+  /* 深色主题的基础颜色 */
+  --bg-page: #0f1115;
+  --bg-card: #151922;
+  --text: #e8ecf3;
+  --muted: #aab2bf;
+  --border: #262b36;
+  --panel-bg: #11161e;
+  --list-hover: #1b2533;
+  --active-bg: #0f2a3d;
+  --active-text: #4ea1ff;
+  --input-bg: #0f141b;
+  --input-border: #30363d;
+  --input-text: #c9d1d9;
+  --input-placeholder: #6b7280;
+  --bubble-bg: #151922;
+  --bubble-me-bg: #17361f;
+  --bubble-me-text: #bfeec1;
+  --bubble-other-bg: #11273a;
+  --bubble-other-text: #c2e7ff;
+  --status-text: #9aa4b2;
+  --timestamp: #8b949e;
+  --user-me-bg: #1d2d21;
+  --user-me-text: #9ad29c;
+  --ghost-bg: #233247;
+  --ghost-bg-hover: #2a3a54;
+  --ghost-color: #9ecbff;
+  --switch-track-bg: #2b3444;
+  --btn-bg: #1b2330;
+  --btn-color: #e8ecf3;
+  --btn-border: #262b36;
+  --btn-shadow-rest: none;
+  --btn-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.28);
+  --btn-bg-hover: #222c3e;
+  --bubble-shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.36);
+  --download-bg: #1a2a40;
+  --download-bg-hover: #21324a;
+  --download-color: #9ecbff;
+  --download-border: #2b3d57;
+  --scroll-track: #11161e;
+  --scroll-thumb: #3a465a;
+  --scroll-thumb-hover: #4a5670;
+  --warn-bg: #3a2a14;
+  --warn-text: #ffb86a;
+}

@@ -1,0 +1,180 @@
+/* 控件样式文件 */
+/* 定义表单控件、按钮和交互元素的样式 */
+/* ===== 输入框样式 ===== */
+#messageInput,
+.form-input {
+  box-sizing: border-box;
+  width: var(--input-width);
+  padding: var(--space-8);
+  border: var(--border-width) solid var(--input-border);
+  border-radius: var(--radius-sm);
+  background: var(--input-bg);
+  color: var(--input-text);
+}
+/* 输入框占位符样式 */
+#messageInput::placeholder,
+.form-input::placeholder {
+  color: var(--input-placeholder);
+  opacity: 1;
+}
+/* 输入框聚焦样式 */
+#messageInput:focus-visible,
+.form-input:focus-visible {
+  outline: var(--focus-outline-sm) solid rgba(24, 144, 255, 0.35);
+  outline-offset: var(--focus-offset-sm);
+}
+/* ===== 按钮基础样式 ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-10);
+  border: var(--border-width) solid var(--btn-border, transparent);
+  border-radius: var(--radius-md);
+  background: var(--btn-bg, #f3f6fa);
+  color: var(--btn-color, var(--text));
+  box-shadow: var(--btn-shadow-rest, none);
+  cursor: pointer;
+  font-weight: 600;
+  /* 过渡效果 */
+  transition: background var(--transition-fast) ease,
+    box-shadow var(--transition-fast) ease,
+    transform var(--transition-fast) ease, filter var(--transition-fast) ease;
+}
+/* 按钮中的图标 */
+.btn .icon {
+  flex: 0 0 var(--icon-size);
+}
+/* ===== 按钮尺寸变体 ===== */
+.btn-sm {
+  /* 小按钮样式 */
+  padding: var(--space-5) var(--space-8);
+  font-size: var(--font-sm);
+}
+/* ===== 按钮交互状态 ===== */
+.btn:hover {
+  /* 悬停效果：变暗、提升、上缩放 */
+  filter: brightness(0.98);
+  transform: translateY(calc(-1 * var(--hover-raise-y))) scale(1.01);
+  box-shadow: var(--btn-shadow-hover, 0 6px 16px rgba(0, 0, 0, 0.08));
+  background: var(--btn-bg-hover, var(--btn-bg));
+}
+.btn:active {
+  /* 按下效果：向下移动 */
+  transform: translateY(var(--press-translate-y));
+}
+.btn:focus-visible {
+  /* 聚焦样式 */
+  outline: var(--focus-outline-md) solid
+    var(--btn-focus, rgba(24, 144, 255, 0.18));
+  outline-offset: var(--focus-offset-md);
+}
+/* ===== 按钮颜色变体 ===== */
+/* 确认、危险和主要按钮使用白色文字 */
+.btn-confirm,
+.btn-danger,
+.btn-primary {
+  --btn-color: #fff;
+}
+/* 确认按钮（绿色） */
+.btn-confirm {
+  --btn-bg: #52c41a;
+  --btn-border: #52c41a;
+  --btn-bg-hover: #47b015;
+  --btn-focus: rgba(82, 196, 26, 0.18);
+  --btn-shadow-rest: none;
+  --btn-shadow-hover: 0 10px 22px rgba(82, 196, 26, 0.18);
+}
+/* 危险按钮（红色） */
+.btn-danger {
+  --btn-bg: #ff4d4f;
+  --btn-border: #ff4d4f;
+  --btn-bg-hover: #e04546;
+  --btn-focus: rgba(255, 77, 79, 0.18);
+  --btn-shadow-rest: none;
+  --btn-shadow-hover: 0 10px 22px rgba(255, 77, 79, 0.22);
+}
+/* 幽灵按钮（透明背景） */
+.btn-ghost {
+  --btn-bg: var(--ghost-bg);
+  --btn-bg-hover: var(--ghost-bg-hover);
+  --btn-color: var(--ghost-color);
+  --btn-border: transparent;
+  --btn-shadow-rest: none;
+  --btn-shadow-hover: none;
+}
+/* 主要按钮（蓝色） */
+.btn-primary {
+  --btn-bg: #1890ff;
+  --btn-border: #1890ff;
+  --btn-bg-hover: #1677e6;
+  --btn-focus: rgba(24, 144, 255, 0.18);
+  --btn-shadow-rest: 0 4px 10px rgba(24, 144, 255, 0.12);
+  --btn-shadow-hover: 0 10px 26px rgba(24, 144, 255, 0.24);
+}
+/* ===== 主题切换开关 ===== */
+.theme-switch {
+  /* 移除默认样式 */
+  appearance: none;
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+.theme-switch:focus-visible {
+  /* 聚焦样式 */
+  outline: var(--focus-outline-md) solid rgba(24, 144, 255, 0.28);
+  border-radius: 999px;
+}
+/* 开关轨道 */
+.theme-switch .switch-track {
+  position: relative;
+  width: var(--switch-w);
+  height: var(--switch-h);
+  background: var(--switch-track-bg);
+  border-radius: 999px;
+  transition: background var(--transition-ui) ease;
+}
+/* 开关滑块 */
+.theme-switch .switch-thumb {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  width: var(--switch-thumb);
+  height: var(--switch-thumb);
+  background: var(--switch-thumb-bg);
+  border-radius: 50%;
+  transition: transform var(--transition-ui) ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+/* 开启状态的滑块位置 */
+.theme-switch[aria-checked="true"] .switch-thumb {
+  transform: translateX(var(--switch-translate));
+}
+/* 开关图标容器 */
+.theme-switch .switch-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--icon-sm);
+  height: var(--icon-sm);
+  color: #ffbf00;
+  opacity: 0.9;
+}
+.theme-switch .switch-icon .icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* 月亮图标（右侧） */
+.theme-switch .switch-icon.moon {
+  right: var(--space-6);
+  color: #9ecbff;
+}
+/* 太阳图标（左侧） */
+.theme-switch .switch-icon.sun {
+  left: var(--space-6);
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<!-- 应用主页面 -->
+<!-- 这是一个基于WebSocket的局域网聊天应用，支持文本消息和文件传输 -->
+<html lang="zh-CN">
+  <head>
+    <!-- 页面元数据设置 -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>lan-text-web-chat</title>
+    <!-- 网站图标 -->
+    <link rel="icon" href="/view/icon/favicon.svg" type="image/svg+xml" />
+    <!-- 主样式文件 -->
+    <link rel="stylesheet" href="/view/style/index.css" />
+  </head>
+  <body>
+    <!-- 主聊天容器 -->
+    <div class="chat-wrap">
+      <!-- 连接状态提示区域 -->
+      <!-- 显示WebSocket连接状态，如连接中、重连中等 -->
+      <div
+        id="connectionStatus"
+        class="connection-status"
+        role="status"
+        aria-live="polite"
+        hidden
+      ></div>
+      <!-- 聊天主体区域 -->
+      <div class="chat-body">
+        <!-- 左侧边栏：房间管理面板 -->
+        <aside class="side-panel side-left">
+          <!-- 房间列表头部 -->
+          <div class="panel-header">
+            <span class="room-list-title">房间</span>
+            <!-- 退出房间按钮 -->
+            <button
+              id="leaveRoomBtn"
+              class="btn btn-danger btn-sm"
+              title="退出房间"
+            >
+              <span
+                class="icon icon-mask"
+                data-icon="leave"
+                aria-hidden="true"
+              ></span>
+              退出
+            </button>
+          </div>
+          <!-- 房间创建操作区域 -->
+          <div class="action-row">
+            <!-- 房间名输入框 -->
+            <input id="roomCode" class="form-input" placeholder="房间名" />
+            <div class="btn-group">
+              <!-- 创建房间按钮 -->
+              <button
+                id="createRoomBtn"
+                class="btn btn-confirm btn-sm"
+                title="创建房间"
+              >
+                <span
+                  class="icon icon-mask"
+                  data-icon="plus"
+                  aria-hidden="true"
+                ></span>
+                创建
+              </button>
+            </div>
+          </div>
+          <!-- 房间列表容器 -->
+          <ul id="roomList" class="list room-list"></ul>
+        </aside>
+        <!-- 消息显示区域 -->
+        <!-- 显示所有聊天消息，支持文本和文件消息 -->
+        <div id="messages" class="messages" role="log" aria-live="polite">
+          <!-- 新消息提示按钮 -->
+          <!-- 当有新消息且用户未滚动到底部时显示 -->
+          <button
+            id="newMsgTip"
+            class="btn btn-sm new-msg-tip"
+            type="button"
+            style="display: none"
+          >
+            <span
+              class="icon icon-mask"
+              data-icon="down"
+              aria-hidden="true"
+            ></span>
+            <span class="new-msg-tip-label">new 新消息</span>
+          </button>
+        </div>
+        <!-- 右侧边栏：用户管理面板 -->
+        <aside class="side-panel side-right">
+          <!-- 用户身份区域 -->
+          <div class="user-identity">
+            <!-- 用户名设置头部 -->
+            <div class="panel-header">
+              用户名
+              <!-- 主题切换按钮 -->
+              <button
+                id="themeToggleBtn"
+                class="theme-switch"
+                role="switch"
+                aria-checked="false"
+                title="切换主题"
+                aria-label="切换主题"
+              >
+                <span class="switch-track">
+                  <span class="switch-icon sun" aria-hidden="true"
+                    ><span class="icon icon-mask" data-icon="sun"></span
+                  ></span>
+                  <span class="switch-icon moon" aria-hidden="true"
+                    ><span class="icon icon-mask" data-icon="moon"></span
+                  ></span>
+                  <span class="switch-thumb"></span>
+                </span>
+              </button>
+            </div>
+            <!-- 用户名输入操作区域 -->
+            <div class="action-row">
+              <!-- 用户名输入框 -->
+              <input id="username" class="form-input" placeholder="用户名" />
+              <div class="btn-group">
+                <!-- 确认用户名按钮 -->
+                <button
+                  id="confirmUsernameBtn"
+                  class="btn btn-confirm btn-sm"
+                  title="确认昵称"
+                >
+                  <span
+                    class="icon icon-mask"
+                    data-icon="check"
+                    aria-hidden="true"
+                  ></span>
+                  确认
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- 在线用户列表头部 -->
+          <div class="user-list-header panel-header">在线用户</div>
+          <!-- 在线用户列表容器 -->
+          <ul id="onlineUsers" class="list online-users"></ul>
+        </aside>
+      </div>
+      <!-- 聊天控制区域 -->
+      <div class="chat-controls">
+        <!-- 消息输入框 -->
+        <!-- 支持多行文本输入，Shift+Enter换行，Enter发送 -->
+        <textarea
+          id="messageInput"
+          rows="2"
+          placeholder="Ctrl+V 粘贴文件 / Shift+Enter 换行 / Enter 发送"
+        ></textarea>
+        <!-- 发送文本消息按钮 -->
+        <button id="sendBtn" class="btn btn-primary" title="发送(Enter)">
+          <span
+            class="icon icon-mask"
+            data-icon="send"
+            aria-hidden="true"
+          ></span>
+          发送
+        </button>
+        <!-- 文件选择输入框（隐藏） -->
+        <input id="fileInput" type="file" />
+        <!-- 发送文件按钮 -->
+        <button id="sendFileBtn" class="btn btn-ghost" title="发送文件">
+          <span
+            class="icon icon-mask"
+            data-icon="sendFile"
+            aria-hidden="true"
+          ></span>
+          发送文件
+        </button>
+      </div>
+    </div>
+    <!-- 主JavaScript模块 -->
+    <script type="module" src="/view/js/main.js"></script>
+  </body>
+</html>

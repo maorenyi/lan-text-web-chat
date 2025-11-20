@@ -1,0 +1,149 @@
+/* 布局样式文件 */
+/* 定义聊天应用的整体布局结构和容器样式 */
+/* ===== 主聊天容器 ===== */
+.chat-wrap {
+  /* 垂直布局 */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  /* 响应式尺寸，最大宽度和高度受限 */
+  width: min(var(--chat-max-w), 96vw);
+  height: min(var(--chat-max-h), 96vh);
+  padding: var(--space-12);
+  /* 边框和圆角 */
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-lg);
+  /* 背景和阴影 */
+  background: var(--bg-card);
+  box-shadow: var(--card-shadow);
+  /* 防止内容溢出 */
+  overflow: hidden;
+}
+/* ===== 聊天主体区域 ===== */
+.chat-body {
+  /* 水平布局，包含侧边栏和消息区域 */
+  display: flex;
+  gap: var(--space-12);
+  /* 占据剩余空间 */
+  flex: 1;
+  /* 允许子元素缩小 */
+  min-height: 0;
+}
+/* ===== 侧边栏样式 ===== */
+.side-panel {
+  /* 垂直布局 */
+  display: flex;
+  flex-direction: column;
+  /* 固定宽度 */
+  width: var(--side-panel-w);
+}
+/* 左侧边栏（房间列表） */
+.side-left {
+  /* 右边框分隔 */
+  border-right: var(--border-width) solid var(--border);
+  padding-right: var(--space-12);
+}
+/* 右侧边栏（用户列表） */
+.side-right {
+  /* 左边框分隔 */
+  border-left: var(--border-width) solid var(--border);
+  padding-left: var(--space-12);
+}
+/* ===== 面板头部样式 ===== */
+.panel-header {
+  /* 水平布局，标题和按钮分布 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) 0;
+  /* 底部边框 */
+  border-bottom: var(--border-width) solid var(--border);
+  /* 次要文字颜色 */
+  color: var(--muted);
+  font-weight: 600;
+}
+/* ===== 列表样式 ===== */
+.list {
+  /* 垂直布局 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--list-gap);
+  padding: var(--list-padding);
+  margin: 0;
+  list-style: none;
+  /* 面板背景色 */
+  background: var(--panel-bg);
+  /* 可滚动 */
+  overflow: auto;
+}
+/* 列表项基础样式 */
+.list > li {
+  padding: var(--li-pad-y) var(--li-pad-x);
+  border-radius: var(--li-radius);
+}
+/* ===== 房间列表特殊样式 ===== */
+.room-list li {
+  /* 鼠标指针样式，表示可点击 */
+  cursor: pointer;
+}
+.room-list li:hover {
+  /* 悬停背景色 */
+  background: var(--list-hover);
+}
+.room-list li.active {
+  /* 激活状态样式 */
+  background: var(--active-bg);
+  color: var(--active-text);
+}
+/* ===== 消息区域样式 ===== */
+.messages {
+  /* 垂直布局 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  /* 最小宽度限制 */
+  min-width: var(--messages-min-w);
+  /* 占据剩余空间 */
+  flex: 1;
+  padding: var(--space-16);
+  /* 可滚动 */
+  overflow: auto;
+  /* 相对定位，为新消息提示按钮提供定位基准 */
+  position: relative;
+}
+/* ===== 操作行样式 ===== */
+.action-row {
+  /* 水平布局，输入框和按钮组 */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-8) 0;
+  /* 底部边框 */
+  border-bottom: var(--border-width) solid var(--border);
+}
+/* ===== 按钮组样式 ===== */
+.btn-group {
+  /* 水平布局，按钮间距 */
+  display: flex;
+  gap: var(--space-8);
+}
+/* ===== 聊天控制区域 ===== */
+.chat-controls {
+  /* 水平布局，输入框和按钮 */
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-12) var(--space-18);
+  /* 顶部边框分隔 */
+  border-top: var(--border-width) solid var(--border);
+}
+/* ===== 隐藏元素 ===== */
+/* 文件输入框隐藏，只通过按钮触发 */
+#fileInput {
+  display: none;
+}
+/* 默认隐藏离开房间按钮 */
+#leaveRoomBtn {
+  display: none;
+}

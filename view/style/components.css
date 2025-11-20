@@ -1,0 +1,280 @@
+/* 组件样式文件 */
+/* 定义聊天应用中各个UI组件的样式 */
+/* ===== 连接状态提示 ===== */
+.connection-status {
+  /* 默认隐藏 */
+  display: none;
+  /* 居中对齐 */
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-12);
+  margin-bottom: var(--space-10);
+  border-radius: var(--radius-sm);
+  /* 警告样式 */
+  background: var(--warn-bg);
+  color: var(--warn-text);
+  font-size: var(--font-sm);
+  box-shadow: var(--shadow-sm);
+}
+/* 显示状态 */
+.connection-status.is-visible {
+  display: flex;
+}
+/* ===== 消息组件 ===== */
+.message {
+  /* 垂直布局 */
+  display: flex;
+  flex-direction: column;
+  /* 最大宽度限制 */
+  max-width: var(--message-max-pct);
+  margin-bottom: 0;
+}
+/* 文件消息特殊处理 */
+.message.file-image,
+.message.file-video {
+  /* 图片和视频消息占满宽度 */
+  width: 100%;
+  max-width: 100%;
+}
+.message.file-image .bubble,
+.message.file-image .chat-image,
+.message.file-audio .bubble,
+.message.file-audio .chat-media,
+.message.file-video .bubble,
+.message.file-video .chat-media {
+  /* 文件消息的气泡和媒体元素占满宽度 */
+  width: 100%;
+}
+.message.file-video .chat-media {
+  /* 视频自适应高度 */
+  height: auto;
+}
+.message.file-audio {
+  /* 音频消息使用百分比宽度 */
+  width: var(--message-max-pct);
+}
+/* ===== 消息发送者信息 ===== */
+.message .who {
+  font-weight: 600;
+  font-size: var(--font-compact);
+}
+/* 文件名和发送者共同样式 */
+.file-name,
+.message .who {
+  margin-bottom: var(--space-6);
+  color: var(--muted);
+}
+.file-name {
+  /* 文件名使用更小字体 */
+  font-size: var(--font-xs);
+}
+/* 文本消息的发送者使用主要文字颜色 */
+.message.text .who {
+  color: var(--text);
+}
+/* ===== 状态消息 ===== */
+.message.status {
+  /* 居中显示的状态消息 */
+  color: var(--status-text);
+  font-style: italic;
+  text-align: center;
+  align-self: center;
+}
+.message.status .timestamp {
+  /* 状态消息的时间戳 */
+  display: block;
+  text-align: center;
+}
+/* ===== 消息气泡和输入框 ===== */
+/* 共同的字体设置 */
+#messageInput,
+.bubble {
+  font-family: inherit;
+  font-size: var(--font-base);
+  line-height: var(--line-h-base);
+}
+/* 消息气泡样式 */
+.bubble {
+  padding: var(--space-10) var(--space-12);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bubble-bg);
+  color: var(--text);
+  box-shadow: var(--shadow-hairline);
+  /* 保留换行和自动换行 */
+  white-space: pre-wrap;
+  word-break: break-word;
+  /* 悬停过渡效果 */
+  transition: box-shadow var(--transition-ui) ease,
+    transform var(--transition-micro) ease;
+}
+.bubble:hover {
+  /* 悬停时提升阴影和位置 */
+  box-shadow: var(--bubble-shadow-hover);
+  transform: translateY(calc(-1 * var(--hover-bubble-raise-y)));
+}
+/* ===== 消息输入框 ===== */
+#messageInput {
+  /* 占据剩余空间 */
+  flex: 1;
+  min-height: var(--input-min-h);
+  width: auto;
+  /* 禁用手动调整大小 */
+  resize: none;
+}
+/* ===== 消息对齐 ===== */
+/* 自己的消息右对齐 */
+.message.me {
+  margin-left: auto;
+}
+.message.me .bubble {
+  /* 自己的消息使用不同颜色 */
+  background: var(--bubble-me-bg);
+  color: var(--bubble-me-text);
+  border-color: transparent;
+}
+/* 他人的消息左对齐 */
+.message.other .bubble {
+  background: var(--bubble-other-bg);
+  color: var(--bubble-other-text);
+  border-color: var(--bubble-other-bg);
+  align-self: flex-start;
+}
+/* ===== 文件和媒体元素 ===== */
+.chat-image,
+.chat-media,
+.file-download {
+  /* 顶部间距 */
+  display: block;
+  margin-top: var(--space-8);
+}
+/* 文件下载按钮 */
+.file-download {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-6) var(--space-10);
+  border: var(--border-width) solid var(--download-border);
+  border-radius: var(--radius-sm);
+  background: var(--download-bg);
+  color: var(--download-color);
+  font-size: var(--font-compact);
+  text-decoration: none;
+  /* 过渡效果 */
+  transition: background var(--transition-ui) ease,
+    box-shadow var(--transition-ui) ease, transform var(--transition-micro) ease;
+}
+.file-download:hover {
+  /* 悬停效果 */
+  background: var(--download-bg-hover);
+  box-shadow: var(--shadow-sm);
+}
+/* 聊天图片 */
+.chat-image {
+  max-width: var(--image-max-w);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-md);
+}
+.message.file-image .chat-image {
+  /* 图片消息中的图片自适应 */
+  max-width: 100%;
+  height: auto;
+}
+/* ===== 时间戳 ===== */
+.timestamp {
+  font-size: var(--font-xs);
+  color: var(--timestamp);
+  margin-top: var(--space-6);
+  text-align: right;
+}
+/* ===== 文件预览文本 ===== */
+.file-preview-text {
+  /* 等宽字体 */
+  font-family: monospace;
+  font-size: var(--font-sm);
+  white-space: pre-wrap;
+  max-height: var(--preview-max-h);
+  overflow: auto;
+  margin-top: var(--space-6);
+  padding: var(--space-8);
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--panel-bg);
+}
+/* ===== 用户身份区域 ===== */
+.user-identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-8) 0 var(--space-10);
+}
+/* ===== 在线用户列表 ===== */
+.online-users li {
+  /* 透明背景 */
+  background: transparent;
+  color: var(--text);
+  font-weight: 500;
+}
+.online-users li.me {
+  /* 当前用户高亮 */
+  background: var(--user-me-bg);
+  color: var(--user-me-text);
+}
+/* ===== 上传进度条 ===== */
+.upload-progress {
+  /* 默认隐藏 */
+  display: none;
+  align-items: center;
+  gap: var(--space-8);
+}
+.upload-progress .bar {
+  /* 进度条填充 */
+  width: 0;
+  height: 100%;
+  background: var(--active-text);
+  transition: width var(--transition-progress) ease;
+}
+.upload-progress .label {
+  /* 进度标签 */
+  font-size: var(--font-sm);
+  color: var(--muted);
+}
+.upload-progress .track {
+  /* 进度条轨道 */
+  width: var(--progress-track-w);
+  height: var(--space-8);
+  background: var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+/* ===== 新消息提示 ===== */
+.new-msg-tip {
+  /* 粘性定位 */
+  position: sticky;
+  bottom: var(--space-8);
+  margin-top: var(--space-10);
+  margin-left: auto;
+  z-index: 5;
+  /* 警告样式 */
+  background: var(--warn-bg);
+  color: var(--warn-text);
+  border: var(--border-width) solid var(--warn-bg);
+  box-shadow: var(--shadow-sm);
+  /* 覆盖按钮变量 */
+  --btn-bg: var(--warn-bg);
+  --btn-bg-hover: var(--warn-bg);
+  --btn-color: var(--warn-text);
+  --btn-border: var(--warn-bg);
+  padding: var(--space-6) var(--space-10);
+}
+.new-msg-tip:hover {
+  /* 悬停效果 */
+  filter: brightness(1.02);
+  background: var(--warn-bg);
+  color: var(--warn-text);
+  border-color: var(--warn-bg);
+}
+.new-msg-tip-label {
+  display: inline-flex;
+  align-items: center;
+}

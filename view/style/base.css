@@ -1,0 +1,128 @@
+/* 基础样式文件 */
+/* 包含全局样式重置、布局基础、图标系统和滚动条样式 */
+/* ===== 基础布局和重置 ===== */
+html,
+body {
+  /* 确保页面占满视口高度 */
+  height: 100%;
+}
+/* CSS重置 - 使用border-box盒模型 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/* 页面主体样式 */
+body {
+  /* 居中布局 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  /* 使用CSS变量设置背景和文字颜色 */
+  background: var(--bg-page, #eef3f8);
+  color: var(--text, #222);
+  /* 设置字体 */
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* ===== 图标系统 ===== */
+/* 基础图标容器 */
+.icon {
+  display: inline-block;
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+/* 遮罩图标样式 - 使用CSS mask实现SVG图标 */
+.icon-mask {
+  /* 使用currentColor作为背景色，使图标随文字颜色变化 */
+  background-color: currentColor;
+  /* 设置遮罩图片 */
+  -webkit-mask-image: var(--icon);
+  mask-image: var(--icon);
+  /* 遮罩大小和位置 */
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+/* 图标定义 - 为不同图标设置对应的SVG路径 */
+.icon-mask[data-icon="check"] {
+  --icon: url("/view/icon/check.svg");
+}
+.icon-mask[data-icon="download"] {
+  --icon: url("/view/icon/download.svg");
+}
+.icon-mask[data-icon="leave"] {
+  --icon: url("/view/icon/leave.svg");
+}
+.icon-mask[data-icon="moon"] {
+  --icon: url("/view/icon/moon.svg");
+}
+.icon-mask[data-icon="plus"] {
+  --icon: url("/view/icon/plus.svg");
+}
+.icon-mask[data-icon="send"] {
+  --icon: url("/view/icon/send.svg");
+}
+.icon-mask[data-icon="sendFile"] {
+  --icon: url("/view/icon/sendFile.svg");
+}
+.icon-mask[data-icon="down"] {
+  --icon: url("/view/icon/down.svg");
+}
+.icon-mask[data-icon="sun"] {
+  --icon: url("/view/icon/sun.svg");
+}
+/* ===== 滚动条样式 ===== */
+/* 浅色主题滚动条 */
+body:not(.theme-dark),
+body:not(.theme-dark) * {
+  /* Firefox滚动条颜色 */
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+/* Webkit浏览器（Chrome/Safari）滚动条样式 */
+body:not(.theme-dark) ::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+body:not(.theme-dark) ::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+  border-radius: var(--radius-lg);
+}
+body:not(.theme-dark) ::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb);
+  border: var(--scrollbar-border-w) solid var(--scroll-track);
+  border-radius: var(--radius-lg);
+}
+body:not(.theme-dark) ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scroll-thumb-hover);
+}
+body:not(.theme-dark) ::-webkit-scrollbar-corner {
+  background: var(--scroll-track);
+}
+/* 深色主题滚动条 */
+body.theme-dark,
+body.theme-dark * {
+  scrollbar-color: var(--scroll-thumb, #3a465a) var(--scroll-track, #11161e);
+}
+body.theme-dark ::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+body.theme-dark ::-webkit-scrollbar-track {
+  background: var(--scroll-track, #11161e);
+  border-radius: var(--radius-lg);
+}
+body.theme-dark ::-webkit-scrollbar-thumb {
+  background-color: var(--scroll-thumb, #3a465a);
+  border: var(--scrollbar-border-w) solid var(--scroll-track, #11161e);
+  border-radius: var(--radius-lg);
+}
+body.theme-dark ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scroll-thumb-hover, #4a5670);
+}
+body.theme-dark ::-webkit-scrollbar-corner {
+  background: var(--scroll-track, #11161e);
+}
