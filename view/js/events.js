@@ -136,9 +136,11 @@ function initRoomEvents(transport) {
     // 连接大厅并请求创建房间
     transport.connectLobby();
     transport.requestCreate(roomName);
+    // 清空房间名输入框
+    const input = $("roomCode");
+    if (input) input.value = "";
     // 创建请求发送后，让输入框失焦避免多次触发
     setTimeout(() => {
-      const input = $("roomCode");
       if (input) input.blur();
     }, 0);
   });

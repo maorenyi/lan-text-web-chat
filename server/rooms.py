@@ -4,7 +4,7 @@ from __future__ import annotations
 from fastapi import WebSocket
 import asyncio
 import logging
-from server.config import jd, utc_ts
+from server.config import jd, utc_ts, ROOM_DELETION_DELAY
 
 logger = logging.getLogger("lan-text-web-chat")
 
@@ -23,6 +23,9 @@ class RoomManager:
         self.lobby_id = lobby_id
         self.rooms: dict[str, Room] = {lobby_id: Room()}
         self.lobby_clients: set[WebSocket] = set()
+        self.deletion_timers: dict[str, asyncio.Handle] = {}
+        # 房间删除延迟时间（秒）
+        self.deletion_delay = ROOM_DELETION_DELAY
 
     # 判断房间是否存在
     def exists(self, room_id: str) -> bool:
@@ -49,6 +52,13 @@ class RoomManager:
     def delete(self, room_id: str):
         if room_id != self.lobby_id and room_id in self.rooms:
             del self.rooms[room_id]
+
+    # 延迟删除房间
+    async def _delayed_delete(self, room_id: str):
+        if room_id in self.deletion_timers:
+            del self.deletion_timers[room_id]
+        self.delete(room_id)
+        await self.broadcast_rooms()
 
     # 获取所有非大厅房间列表
     def list_rooms(self) -> list[str]:
@@ -93,8 +103,10 @@ class RoomManager:
         for ws in stale:
             r.connections.pop(ws, None)
         if not r.connections and room_id != self.lobby_id:
-            self.delete(room_id)
-            await self.broadcast_rooms()
+            if room_id not in self.deletion_timers:
+                self.deletion_timers[room_id] = asyncio.get_event_loop().call_later(
+                    self.deletion_delay, lambda: asyncio.create_task(self._delayed_delete(room_id))
+                )
 
     # 安全发送文本消息到单个 WebSocket，失败自动关闭连接
     async def safe_send_text(self, ws: WebSocket, message: str) -> bool:
@@ -147,6 +159,4 @@ class RoomManager:
         await self.announce_status(room_id, f"{username} 已离开")
         if r.connections:
             await self.announce_users(room_id)
-        else:
-            self.delete(room_id)
             await self.broadcast_rooms()

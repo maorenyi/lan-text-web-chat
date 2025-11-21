@@ -130,6 +130,12 @@ def make_router(room_manager: RoomManager) -> APIRouter:
             await send_err(websocket, "bad_username", close_code=CLOSE_POLICY)
             return
         r.connections[websocket] = username  # 记录连接与用户名
+        # 如果有删除定时器，取消它
+        if room_id in room_manager.deletion_timers:
+            room_manager.deletion_timers[room_id].cancel()
+            del room_manager.deletion_timers[room_id]
+        # 发送房间切换消息给自己
+        await websocket.send_text(jd({"type": "roomSwitch", "room": room_id}))
         await room_manager.announce_status(
             room_id, f"{username} 已加入", exclude=websocket
         )  # 广播加入状态

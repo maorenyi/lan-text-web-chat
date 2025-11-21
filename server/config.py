@@ -15,6 +15,13 @@ VIEW_DIR = BASE_DIR / "view"
 # JSON 序列化工具
 jd = json.dumps
 
+# 加载 .env 文件（从项目根目录）
+try:
+    from dotenv import load_dotenv
+    load_dotenv(BASE_DIR / '.env')
+except ImportError:
+    pass  # 如果没有安装 python-dotenv，跳过
+
 
 # 全局配置项，包含跨域、消息体积限制和静态资源缓存
 @dataclass(frozen=True)
@@ -25,6 +32,7 @@ class Settings:
     static_cache_seconds: int
     storage_max_bytes: int
     storage_max_age_days: int
+    room_deletion_delay: int
 
 
 # 辅助函数：处理CORS源列表
@@ -65,6 +73,7 @@ def _load_settings() -> Settings:
     storage_max_age_days = _get_env_int(
         "STORAGE_MAX_AGE_DAYS", 7, 1
     )  # 默认7天，最小1天
+    room_deletion_delay = _get_env_int("ROOM_DELETION_DELAY", 60, 10)  # 默认60秒，最小10秒
     return Settings(
         allow_origins=allow,
         max_message_bytes=max_bytes,
@@ -72,6 +81,7 @@ def _load_settings() -> Settings:
         static_cache_seconds=cache_seconds,
         storage_max_bytes=storage_max_bytes,
         storage_max_age_days=storage_max_age_days,
+        room_deletion_delay=room_deletion_delay,
     )
 
 
@@ -89,6 +99,8 @@ STATIC_CACHE_SECONDS = _settings.static_cache_seconds
 STORAGE_MAX_BYTES = _settings.storage_max_bytes
 # 存储数据最大年龄（天）
 STORAGE_MAX_AGE_DAYS = _settings.storage_max_age_days
+# 房间删除延迟时间（秒）
+ROOM_DELETION_DELAY = _settings.room_deletion_delay
 
 
 # 构造错误响应，返回标准 JSON 格式
@@ -125,6 +137,7 @@ __all__ = [
     "STATIC_CACHE_SECONDS",
     "STORAGE_MAX_BYTES",
     "STORAGE_MAX_AGE_DAYS",
+    "ROOM_DELETION_DELAY",
     "err",
     "jloads",
     "ok",

@@ -20,6 +20,8 @@ export let STORAGE_MAX_AGE_DAYS = 7;
 export const LOBBY_ROOM = "lobby";
 // 用户名在本地存储中的键名
 export const STORAGE_KEY = "lanchat_username";
+// 上次房间在本地存储中的键名
+export const STORAGE_KEY_LAST_ROOM = "lanchat_last_room";
 // 主题设置在本地存储中的键名
 export const THEME_KEY = "lanchat_theme";
 // 用户名正则表达式模式，支持中文、字母、数字、下划线、短横线，长度1-10位

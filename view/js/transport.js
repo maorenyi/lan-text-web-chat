@@ -4,6 +4,7 @@
  * 处理连接状态、错误处理和事件分发，为应用程序提供可靠的网络通信。
  */
 import { wsUrl, wsOpen, wsSend } from "./utils.js";
+import { STORAGE_KEY_LAST_ROOM } from "./config.js";
 // 重连基础延迟毫秒数
 const RETRY_BASE_MS = 1000;
 // 重连最大延迟毫秒数
@@ -71,6 +72,10 @@ export class Transport {
       return;
     }
     this.currentRoom = roomId;
+    // 保存上次房间到本地存储
+    try {
+      localStorage.setItem(STORAGE_KEY_LAST_ROOM, roomId);
+    } catch (_) {}
     this._emit("roomSwitch", roomId);
     this._clearTimer("room");
     this._openRoomSocket(roomId);

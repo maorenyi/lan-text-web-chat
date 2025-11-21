@@ -11,6 +11,7 @@ import { cleanupExpiredData } from "./storage.js";
 import { setUsername } from "./state.js";
 import { statusMessage } from "./messages.js";
 import { setupRoomCodeValidation } from "./events.js";
+import { STORAGE_KEY_LAST_ROOM } from "./config.js";
 /**
  * 初始化应用程序，设置主题、约束条件、事件监听器等
  * 这是应用程序启动时的主要入口函数
@@ -49,14 +50,23 @@ export function init(transport) {
     setUsername(saved);
     if (usernameInput) usernameInput.value = saved;
     transport.connectLobby();
-    transport.connectRoom("lobby");
+    // 尝试连接上次房间，如果没有则连接大厅
+    let lastRoom = null;
+    try {
+      lastRoom = localStorage.getItem(STORAGE_KEY_LAST_ROOM);
+    } catch (_) {}
+    if (lastRoom && lastRoom !== "lobby") {
+      transport.connectRoom(lastRoom);
+    } else {
+      transport.connectRoom("lobby");
+    }
   }
   // 如果没有用户名，显示提示
   if (!saved) {
     statusMessage(TEXT.enterUsername);
     if (usernameInput) usernameInput.focus();
   }
-  // 更新离开按钮状态
+  // 更新离开按钮状态，初始为lobby
   updateLeaveButton("lobby", "lobby");
 }
 /**
