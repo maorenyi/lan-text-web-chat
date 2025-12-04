@@ -67,11 +67,12 @@ function createExpiredPlaceholder(size) {
  * @param {string} content - 文件内容
  * @returns {HTMLElement} 预览元素
  */
+// 文本预览
 function createTextPreview(content) {
   const pre = document.createElement("div");
   pre.className = "file-preview-text";
   pre.textContent =
-    content.length > 400 ? content.slice(0, 400) + "..." : content;
+    content.length > 200 ? content.slice(0, 200) + "..." : content;
   return pre;
 }
 /**
@@ -189,12 +190,21 @@ function buildFileBubble(bubble, container, m) {
     return;
   }
   if (mime === "text/plain") {
-    // 文本文件：尝试显示预览
+    // 文本文件：尝试显示预览并加下载按钮
     try {
       const comma = m.data.indexOf(",");
       if (comma > -1) {
         const raw = base64ToUtf8(m.data.slice(comma + 1));
+        // 先插入文本预览
         bubble.appendChild(createTextPreview(raw));
+        // 再插入下载按钮（在 timestamp 之前）
+        const btn = createDownloadButton(
+          m.data,
+          m.name,
+          typeof m.size === "number" ? m.size : dataUrlBytes(m.data)
+        );
+        btn.style.marginTop = "5px";
+        bubble.appendChild(btn);
         return;
       }
     } catch (_) {}
