@@ -1,7 +1,15 @@
 # 项目启动入口，负责初始化日志、启动 FastAPI 服务。
 # 当直接运行此文件时，会启动应用服务器。
 from __future__ import annotations
+import sys
+from pathlib import Path
+
+# 添加项目根目录到系统路径，以便能够导入 server 模块
+sys.path.insert(0, str(Path(__file__).parent.parent))
+# 第三方库导入
 import uvicorn
+
+# 本地应用导入
 from server.app import app
 from server.logging_setup import configure_logging
 
